@@ -7,7 +7,8 @@
 <title>Kakuro 2-in-1 Puzzle Book — Modus Entertainment</title>
 
 <!-- =====================================================================
-     THE ONLY LINE YOU EVER EDIT IS THE <meta http-equiv="refresh"> BELOW.
+     TO CHANGE WHERE THIS LINK GOES, EDIT THE TWO URLs IN THE BLOCK BELOW.
+     They are deliberately kept side by side, and they MUST be identical.
      =====================================================================
 
      This page is a permanent, owned redirect. Its public address is:
@@ -16,32 +17,41 @@
 
      That address is the ONLY link that goes in bios, captions, pins and
      posts. Never link a retailer URL directly. Every post that ever used
-     this link -- past and future -- follows whatever this one page points
-     at, so changing the destination here re-points all historical traffic
-     at once, with nothing to edit on any social platform.
+     this link -- past and future -- follows whatever this page points at,
+     so changing the destination here re-points all historical traffic at
+     once, with nothing to edit on any social platform.
+
+     WHY TWO COPIES AND NOT ONE
+     --------------------------
+     The first is the automatic redirect; the second is the visible link a
+     visitor clicks if the automatic one does not fire. The fallback link
+     must carry the full literal URL, because the situations where it is
+     needed are exactly the situations where nothing is running to fill it
+     in. An earlier version generated that href with JavaScript, which left
+     it empty for anyone without JavaScript -- the one audience it existed
+     to serve. Both URLs are now written out in full, one after the other.
 
      TO CHANGE THE DESTINATION (e.g. when our own storefront/cart goes live):
-       1. Edit the url= value inside the meta refresh tag below. Nothing else.
-       2. Commit. GitHub Pages republishes in roughly a minute.
-
-     Do not add a second copy of the URL anywhere in this file. The script
-     at the bottom reads the destination back out of that same meta tag, so
-     there is exactly one source of truth and the two can never disagree.
+       1. Replace the URL in BOTH lines of the block below with the new one.
+       2. Run  python3 check_redirect.py  to confirm the two still match.
+       3. Commit. GitHub Pages republishes in roughly a minute.
 
      CURRENT DESTINATION (as of 16 September 2026)
      ---------------------------------------------
      An Amazon two-step search: a real, unmodified Amazon search results
-     page for "kakuro puzzle book", narrowed by the author filter
-     (rh=p_27) to Modus Racio, which isolates it to our single title,
-     ASIN B0HJZ2LKF8. Verified 16 Sep 2026: returns "1 result". This is a
-     genuine filtered search page, not a single-hop product link dressed up
-     with keyword parameters.
+     page for "kakuro puzzle book", narrowed by the author filter (rh=p_27)
+     to Modus Racio, which isolates it to our single title, ASIN
+     B0HJZ2LKF8. Verified 16 Sep 2026: returns "1 result". This is a genuine
+     filtered search page, not a single-hop product link dressed up with
+     keyword parameters.
 
-     If the destination ever stops resolving to exactly one result, the
-     cause is almost always the author name changing in KDP -- update the
-     p_27 value to match the author name exactly as Amazon shows it, or
-     fall back to the plain product page https://www.amazon.com/dp/B0HJZ2LKF8
+     If it ever stops resolving to exactly one result, the cause is almost
+     always the author name changing in KDP -- update the p_27 value to the
+     author name exactly as Amazon shows it, or fall back to the plain
+     product page https://www.amazon.com/dp/B0HJZ2LKF8
 -->
+
+<!-- DESTINATION 1 of 2 -- the automatic redirect. Fires without JavaScript. -->
 <meta http-equiv="refresh" content="0; url=https://www.amazon.com/s?k=kakuro+puzzle+book&i=stripbooks&rh=p_27%3AModus%2BRacio">
 
 <style>
@@ -52,16 +62,10 @@ a{color:#0057b8}
 </head>
 <body>
 <p>Taking you to the Kakuro 2-in-1 Puzzle Book&hellip;</p>
-<p><a id="manual" href="">Continue here</a> if you are not redirected.</p>
 
-<script>
-// Single source of truth: read the destination back out of the meta refresh
-// tag above so this file never holds two copies of the URL. location.replace
-// keeps this page out of browser history, so Back returns to the social app
-// rather than bouncing the visitor through the redirect again.
-var dest = document.querySelector('meta[http-equiv="refresh"]').content.split(/url=/i)[1];
-document.getElementById('manual').href = dest;
-location.replace(dest);
-</script>
+<!-- DESTINATION 2 of 2 -- the fallback link. Must match DESTINATION 1 exactly.
+     Written out in full on purpose: nothing computes this href at runtime, so
+     it still works with JavaScript disabled or blocked. -->
+<p><a href="https://www.amazon.com/s?k=kakuro+puzzle+book&amp;i=stripbooks&amp;rh=p_27%3AModus%2BRacio">Continue to the book</a> if you are not redirected automatically.</p>
 </body>
 </html>
