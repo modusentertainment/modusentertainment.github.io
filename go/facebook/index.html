@@ -7,8 +7,8 @@
 <title>Facebook — Modus Entertainment</title>
 
 <!-- =====================================================================
-     TO CHANGE WHERE THIS LINK GOES, EDIT THE TWO URLs IN THE BLOCK BELOW.
-     They are deliberately kept side by side, and they MUST be identical.
+     TO CHANGE WHERE THIS LINK GOES, EDIT worker/src/index.js -- NOT THIS FILE.
+     That Worker's DESTINATIONS map is the single source of truth.
      =====================================================================
 
      This page is a permanent, owned redirect. Its public address is:
@@ -27,9 +27,19 @@
      are exactly the cases where no script is running to fill it in.
 
      TO CHANGE THE DESTINATION:
-       1. Replace the URL in BOTH lines of the block below with the new one.
-       2. Run  python3 check_redirect.py  to confirm the two still match.
-       3. Run  python3 publish_site.py go/facebook/index.html  to publish.
+     The two URLs below are now deliberately DIFFERENT. The automatic
+     redirect goes to the modus-go Worker, which logs the click and forwards
+     on; the visible fallback stays a direct link, so a visitor whose
+     automatic redirect never fires still lands in the right place without
+     depending on the same hop. Those fallback clicks go uncounted -- the
+     known and accepted cost of keeping the lifeboat independent.
+
+       1. Change the slug's entry in worker/src/index.js and redeploy:
+            cd worker && npx wrangler deploy
+       2. Change ONLY the fallback link below to the same new URL. The meta
+          refresh points at the Worker route and never needs editing again.
+       3. Run  python3 check_redirect.py --live  to confirm the two agree.
+       4. Run  python3 publish_site.py go/facebook/index.html  to publish.
 
      CURRENT DESTINATION (as of 21 September 2026)
      ---------------------------------------------
@@ -38,8 +48,10 @@
      https://www.facebook.com/<username>). Verified 21 Sep 2026.
 -->
 
-<!-- DESTINATION 1 of 2 -- the automatic redirect. Fires without JavaScript. -->
-<meta http-equiv="refresh" content="0; url=https://www.facebook.com/1368991559620257">
+<!-- THE TRACKED HOP -- the automatic redirect. Goes to the modus-go Worker,
+     which records the click and then forwards to the real destination.
+     Fires without JavaScript. -->
+<meta http-equiv="refresh" content="0; url=https://modus-go.modusentertainment.workers.dev/facebook">
 
 <style>
 body{max-width:42rem;margin:0 auto;padding:4rem 1.25rem;font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;color:#1a1a1a;background:#fff;text-align:center}
@@ -50,7 +62,9 @@ a{color:#0057b8}
 <body>
 <p>Taking you to our Facebook Page on Facebook&hellip;</p>
 
-<!-- DESTINATION 2 of 2 -- the fallback link. Must match DESTINATION 1 exactly.
+<!-- THE DIRECT FALLBACK -- deliberately NOT the Worker route, so it still
+     works if the Worker ever does not. Must match the destination the Worker
+     redirects this slug to; check_redirect.py asserts exactly that.
      Written out in full on purpose: nothing computes this href at runtime, so
      it still works with JavaScript disabled or blocked. -->
 <p><a href="https://www.facebook.com/1368991559620257">Continue to Facebook</a> if you are not redirected automatically.</p>
