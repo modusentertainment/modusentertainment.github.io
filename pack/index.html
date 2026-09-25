@@ -39,6 +39,15 @@ body{max-width:40rem;margin:0 auto;padding:3rem 1.25rem 5rem;font:16px/1.65 -app
 h1{font-size:1.7rem;line-height:1.25;margin:0 0 .5rem}
 .sub{color:#555;margin:0 0 2rem}
 ul{padding-left:1.1rem}li{margin:.35rem 0}
+.gate{margin:2rem 0 .5rem}
+.deal{background:#f4f6f9;border-left:3px solid #0057b8;padding:.9rem 1rem;border-radius:.3rem;font-size:.95rem;margin:0 0 1rem}
+.gate input{width:100%;box-sizing:border-box;font:inherit;padding:.85rem 1rem;border:1px solid #c6ccd4;border-radius:.5rem;background:#fff;color:#1a1a1a}
+.gate input:focus{outline:2px solid #0057b8;outline-offset:1px;border-color:#0057b8}
+.gate button{width:100%;margin-top:.6rem;font:inherit;font-weight:600;cursor:pointer;border:0;background:#0057b8;color:#fff;padding:1rem 1.25rem;border-radius:.5rem}
+.gate button:hover{background:#00438f}
+.gate button[disabled]{opacity:.6;cursor:default}
+.err{color:#b3261e;font-size:.9rem;margin:.6rem 0 0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .dl{display:block;text-align:center;background:#0057b8;color:#fff;text-decoration:none;font-weight:600;padding:1rem 1.25rem;border-radius:.5rem;margin:2rem 0 .5rem}
 .dl:hover{background:#00438f}
 .meta{text-align:center;color:#666;font-size:.9rem;margin:0 0 2.5rem}
@@ -46,6 +55,9 @@ ul{padding-left:1.1rem}li{margin:.35rem 0}
 a{color:#0057b8}
 footer{margin-top:3rem;color:#777;font-size:.85rem}
 @media (prefers-color-scheme:dark){
+ .deal{background:#1e2430;border-left-color:#1b6fd4}
+ .gate input{background:#1b1b1b;border-color:#3a3a3a;color:#e8e8e8}
+ .err{color:#f2837b}
  body{background:#151515;color:#e8e8e8}.sub{color:#aaa}.meta{color:#999}
  a{color:#79b8ff}.dl{background:#1b6fd4;color:#fff}.dl:hover{background:#2a82ea}
  .more{border-top-color:#333}footer{color:#888}}
@@ -54,7 +66,7 @@ footer{margin-top:3rem;color:#777;font-size:.85rem}
 <body>
 
 <h1>Twelve free Kakuro puzzles &mdash; each one sitting on a picture you can colour</h1>
-<p class="sub">A sampler from the Kakuro 2-in-1 Beginner Volume. No signup, no email, no catch.</p>
+<p class="sub">A sampler from the Kakuro 2-in-1 Beginner Volume, free to print at home.</p>
 
 <ul>
   <li><strong>12 beginner puzzles</strong>, large print, every one solvable by pure logic &mdash; no guessing, one clean solution each.</li>
@@ -63,8 +75,20 @@ footer{margin-top:3rem;color:#777;font-size:.85rem}
   <li><strong>Full solutions</strong> at the back.</li>
 </ul>
 
-<a class="dl" href="https://modusentertainment.github.io/pack/kakuro-free-pack.pdf" download>Download the free pack (PDF, 4.3&nbsp;MB)</a>
-<p class="meta">17 pages &middot; letter size &middot; prints at home</p>
+<form id="gate" class="gate" novalidate>
+  <p class="deal"><strong>One small thing in return.</strong> Drop an email or a phone number below and the pack is yours on the spot. Scratch our back, we scratch yours &mdash; it only needs to be <em>somewhat</em> mutually beneficial, right? We have plenty more free puzzles, gifts and offers coming, and this is the only way to send them your way.</p>
+  <label class="sr" for="contact">Email address or phone number</label>
+  <input id="contact" name="contact" type="text" autocomplete="email"
+         placeholder="you@example.com  —  or a phone number" required>
+  <button type="submit" id="go">Send me the free pack</button>
+  <p class="err" id="err" role="alert" hidden></p>
+  <p class="meta">17 pages &middot; letter size &middot; prints at home &middot; 4.3&nbsp;MB PDF</p>
+</form>
+
+<div id="done" class="done" hidden>
+  <a class="dl" id="dl" href="https://modusentertainment.github.io/pack/kakuro-free-pack.pdf" download>Download your pack now (PDF)</a>
+  <p class="meta">Thank you &mdash; that is the deal honoured. The file is yours.</p>
+</div>
 
 <div class="more">
   <p><strong>What is Kakuro?</strong> It is the sudoku variant also known as Cross Sums. Every run of white squares has to add up to the number at its head, and no digit repeats inside a run. There is no arithmetic drilling in it &mdash; it is pure logic, and it never needs a guess.</p>
@@ -75,6 +99,37 @@ footer{margin-top:3rem;color:#777;font-size:.85rem}
 <footer>
   <p>Modus Entertainment &middot; <a href="https://modusentertainment.github.io/privacy/">Privacy</a></p>
 </footer>
+
+<script>
+// The gate. Posts the one field to the Worker on our own domain, which stores
+// it and answers with the file URL -- then the download appears in place. No
+// "check your inbox": we have no mail sender, and a promise we cannot keep is a
+// worse first impression than no gate at all.
+(function () {
+  var form = document.getElementById('gate'), err = document.getElementById('err'),
+      btn = document.getElementById('go'), done = document.getElementById('done');
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var contact = document.getElementById('contact').value.trim();
+    err.hidden = true; btn.disabled = true; btn.textContent = 'One moment\u2026';
+    try {
+      var res = await fetch('https://go.modusentertainment.com/subscribe', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ contact: contact })
+      });
+      var data = await res.json();
+      if (!res.ok || !data.ok) throw new Error(data.error || 'Something went wrong.');
+      document.getElementById('dl').href = data.file;
+      form.hidden = true; done.hidden = false;
+      document.getElementById('dl').focus();
+    } catch (ex) {
+      err.textContent = ex.message; err.hidden = false;
+      btn.disabled = false; btn.textContent = 'Send me the free pack';
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
