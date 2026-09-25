@@ -41,7 +41,20 @@ h1{font-size:1.7rem;line-height:1.25;margin:0 0 .5rem}
 ul{padding-left:1.1rem}li{margin:.35rem 0}
 .gate{margin:2rem 0 .5rem}
 .deal{background:#f4f6f9;border-left:3px solid #0057b8;padding:.9rem 1rem;border-radius:.3rem;font-size:.95rem;margin:0 0 1rem}
-.gate input{width:100%;box-sizing:border-box;font:inherit;padding:.85rem 1rem;border:1px solid #c6ccd4;border-radius:.5rem;background:#fff;color:#1a1a1a}
+.field{margin:0 0 .25rem}
+.field label{display:block;font-size:.85rem;font-weight:600;color:#444;margin:0 0 .35rem}
+.gate input,.gate select{width:100%;box-sizing:border-box;font:inherit;padding:.85rem 1rem;border:1px solid #c6ccd4;border-radius:.5rem;background:#fff;color:#1a1a1a}
+.phone-row{display:flex;gap:.5rem}
+.phone-row select{flex:0 0 11.5rem;padding-right:.5rem}
+.phone-row input{flex:1 1 auto;min-width:0}
+.gate input.ok{border-color:#1a7f37;background:#f6fbf7}
+.gate input.bad{border-color:#b3261e;background:#fdf7f7}
+.hint{font-size:.82rem;margin:.35rem 0 0;min-height:1.1em;color:#666}
+.hint.ok{color:#1a7f37}
+.hint.bad{color:#b3261e}
+.or{display:flex;align-items:center;text-align:center;color:#888;font-size:.85rem;margin:.9rem 0}
+.or::before,.or::after{content:"";flex:1;border-top:1px solid #dfe3e8}
+.or span{padding:0 .75rem;text-transform:uppercase;letter-spacing:.08em}
 .gate input:focus{outline:2px solid #0057b8;outline-offset:1px;border-color:#0057b8}
 .gate button{width:100%;margin-top:.6rem;font:inherit;font-weight:600;cursor:pointer;border:0;background:#0057b8;color:#fff;padding:1rem 1.25rem;border-radius:.5rem}
 .gate button:hover{background:#00438f}
@@ -56,7 +69,12 @@ a{color:#0057b8}
 footer{margin-top:3rem;color:#777;font-size:.85rem}
 @media (prefers-color-scheme:dark){
  .deal{background:#1e2430;border-left-color:#1b6fd4}
- .gate input{background:#1b1b1b;border-color:#3a3a3a;color:#e8e8e8}
+ .gate input,.gate select{background:#1b1b1b;border-color:#3a3a3a;color:#e8e8e8}
+ .field label{color:#bbb}.hint{color:#999}
+ .gate input.ok{border-color:#3fb950;background:#121a14}
+ .gate input.bad{border-color:#f2837b;background:#1e1414}
+ .hint.ok{color:#3fb950}.hint.bad{color:#f2837b}
+ .or{color:#888}.or::before,.or::after{border-top-color:#333}
  .err{color:#f2837b}
  body{background:#151515;color:#e8e8e8}.sub{color:#aaa}.meta{color:#999}
  a{color:#79b8ff}.dl{background:#1b6fd4;color:#fff}.dl:hover{background:#2a82ea}
@@ -76,13 +94,30 @@ footer{margin-top:3rem;color:#777;font-size:.85rem}
 </ul>
 
 <form id="gate" class="gate" novalidate>
-  <p class="deal"><strong>One small thing in return.</strong> Drop an email or a phone number below and the pack is yours on the spot. Scratch our back, we scratch yours &mdash; it only needs to be <em>somewhat</em> mutually beneficial, right? We have plenty more free puzzles, gifts and offers coming, and this is the only way to send them your way.</p>
-  <label class="sr" for="contact">Email address or phone number</label>
-  <input id="contact" name="contact" type="text" autocomplete="email"
-         placeholder="you@example.com  —  or a phone number" required>
+  <p class="deal">We have many more gifts and offers in store this fall season, and we will send them your way.</p>
+
+  <div class="field">
+    <label for="email">Email address</label>
+    <input id="email" name="email" type="email" inputmode="email" autocomplete="email"
+           placeholder="you@example.com" aria-describedby="email-msg">
+    <p class="hint" id="email-msg" role="status"></p>
+  </div>
+
+  <div class="or"><span>or</span></div>
+
+  <div class="field">
+    <label for="phone">Phone number</label>
+    <div class="phone-row">
+      <select id="cc" aria-label="Country code"></select>
+      <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel-national"
+             placeholder="555 012 3456" aria-describedby="phone-msg">
+    </div>
+    <p class="hint" id="phone-msg" role="status"></p>
+  </div>
+
   <button type="submit" id="go">Send me the free pack</button>
   <p class="err" id="err" role="alert" hidden></p>
-  <p class="meta">17 pages &middot; letter size &middot; prints at home &middot; 4.3&nbsp;MB PDF</p>
+  <p class="meta">17 pages &middot; letter size &middot; prints at home &middot; 4.5&nbsp;MB PDF</p>
 </form>
 
 <div id="done" class="done" hidden>
@@ -101,25 +136,151 @@ footer{margin-top:3rem;color:#777;font-size:.85rem}
 </footer>
 
 <script>
-// The gate. Posts the one field to the Worker on our own domain, which stores
-// it and answers with the file URL -- then the download appears in place. No
-// "check your inbox": we have no mail sender, and a promise we cannot keep is a
-// worse first impression than no gate at all.
+/* The gate. Two fields, either one is enough.
+
+   Validation runs here for the reader's benefit -- a red line the moment a
+   typo is obvious beats a rejection after they press the button -- and again
+   in the Worker, which is the one that actually decides. Client checks are a
+   courtesy; never the gate.
+
+   Phone lengths below are NATIONAL digits, excluding the country code, and are
+   only listed where a country has a genuinely fixed or narrow range. Anything
+   unlisted falls back to a wide 6-14, because refusing somebody's real number
+   costs a real lead and a too-clever validator is how that happens. */
 (function () {
-  var form = document.getElementById('gate'), err = document.getElementById('err'),
-      btn = document.getElementById('go'), done = document.getElementById('done');
+  var COUNTRIES = [
+    ['US', 'United States', '1', 10], ['CA', 'Canada', '1', 10],
+    ['GB', 'United Kingdom', '44', [9, 10]], ['IE', 'Ireland', '353', [7, 9]],
+    ['AU', 'Australia', '61', 9], ['NZ', 'New Zealand', '64', [8, 9]],
+    ['DE', 'Germany', '49', [10, 11]], ['FR', 'France', '33', 9],
+    ['IT', 'Italy', '39', [9, 10]], ['ES', 'Spain', '34', 9],
+    ['NL', 'Netherlands', '31', 9], ['BE', 'Belgium', '32', [8, 9]],
+    ['CH', 'Switzerland', '41', 9], ['AT', 'Austria', '43', [10, 11]],
+    ['SE', 'Sweden', '46', [7, 9]], ['NO', 'Norway', '47', 8],
+    ['DK', 'Denmark', '45', 8], ['FI', 'Finland', '358', [9, 10]],
+    ['PT', 'Portugal', '351', 9], ['PL', 'Poland', '48', 9],
+    ['CZ', 'Czechia', '420', 9], ['GR', 'Greece', '30', 10],
+    ['JP', 'Japan', '81', 10], ['KR', 'South Korea', '82', [9, 10]],
+    ['IN', 'India', '91', 10], ['SG', 'Singapore', '65', 8],
+    ['MY', 'Malaysia', '60', [9, 10]], ['PH', 'Philippines', '63', 10],
+    ['ZA', 'South Africa', '27', 9], ['AE', 'UAE', '971', 9],
+    ['IL', 'Israel', '972', 9], ['TR', 'Turkey', '90', 10],
+    ['BR', 'Brazil', '55', [10, 11]], ['MX', 'Mexico', '52', 10],
+    ['AR', 'Argentina', '54', 10], ['CL', 'Chile', '56', 9],
+    ['CO', 'Colombia', '57', 10]
+  ];
+
+  var cc = document.getElementById('cc'), email = document.getElementById('email'),
+      phone = document.getElementById('phone'), emsg = document.getElementById('email-msg'),
+      pmsg = document.getElementById('phone-msg'), err = document.getElementById('err'),
+      btn = document.getElementById('go'), form = document.getElementById('gate'),
+      done = document.getElementById('done');
+
+  COUNTRIES.forEach(function (c) {
+    var o = document.createElement('option');
+    o.value = c[2] + '|' + (Array.isArray(c[3]) ? c[3].join('-') : c[3]);
+    o.textContent = c[1] + ' (+' + c[2] + ')';
+    if (c[0] === 'US') o.selected = true;
+    cc.appendChild(o);
+  });
+
+  /* Deliberately practical, not RFC-complete. It catches every mistake a real
+     person actually makes -- missing @, missing dot, a stray space, a trailing
+     dot -- without rejecting the unusual-but-valid addresses a stricter pattern
+     throws away. */
+  function checkEmail(v) {
+    v = v.trim();
+    if (!v) return null;
+    if (!/^[^\s@]+@[^\s@]+$/.test(v)) return 'That needs an @ with something either side of it.';
+    var parts = v.split('@'), local = parts[0], domain = parts[1];
+    if (!/^[A-Za-z0-9!#$%&'*+/=?^_`{|}~.-]+$/.test(local)) return 'There is a character in there an email cannot have.';
+    if (/^\.|\.$|\.\./.test(local) || /^\.|\.$|\.\./.test(domain)) return 'There is a full stop in the wrong place.';
+    if (domain.indexOf('.') === -1) return 'The part after the @ needs a dot, like gmail.com';
+    /* Each dot-separated label must start and end with a letter or digit --
+       hyphens are only legal inside one. "a@-.com" slipped through a looser
+       check on the first test run. */
+    if (!/^[A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])?)*$/.test(domain))
+      return 'That domain name is not a valid one.';
+    if (!/\.[A-Za-z]{2,}$/.test(domain)) return 'That does not end in a real domain ending.';
+    return true;
+  }
+
+  /* National digits with any trunk prefix removed. Most of the world writes a
+     mobile number with a leading 0 that is dropped when dialling in from
+     abroad -- "07700 900123" in the UK is the same number as +44 7700 900123 --
+     and counting that 0 rejected a real number on this validator's first test
+     run. The NANP equivalent is a leading 1. */
+  function national(v, dial) {
+    var d = (v || '').replace(/\D/g, '');
+    if (!d) return '';
+    if (dial === '1') return (d.length === 11 && d[0] === '1') ? d.slice(1) : d;
+    return d[0] === '0' ? d.replace(/^0+/, '') : d;
+  }
+
+  function checkPhone(v) {
+    var dial = cc.value.split('|')[0];
+    var raw = (v || '').replace(/\D/g, '');
+    if (!raw) return null;
+    var spec = cc.value.split('|')[1].split('-').map(Number);
+    var min = spec[0] || 6, max = (spec.length > 1 ? spec[1] : spec[0]) || 14;
+    /* Accept whichever reading fits: a few countries keep the leading 0 as part
+       of the number, so both the raw and the trunk-stripped form are allowed
+       rather than picking one and rejecting the other. */
+    var forms = [raw, national(v, dial)].filter(Boolean);
+    var fits = forms.some(function (f) { return f.length >= min && f.length <= max; });
+    if (fits) return true;
+    var want = (min === max ? String(min) : min + '-' + max) + ' digits';
+    var longest = Math.max.apply(null, forms.map(function (f) { return f.length; }));
+    return longest < min
+      ? 'That looks short for this country — expecting ' + want + '.'
+      : 'That looks long for this country — expecting ' + want + '.';
+  }
+
+  function paint(input, msgEl, result, okText) {
+    input.classList.remove('ok', 'bad'); msgEl.classList.remove('ok', 'bad');
+    if (result === null) { msgEl.textContent = ''; return; }
+    if (result === true) { input.classList.add('ok'); msgEl.classList.add('ok'); msgEl.textContent = okText; }
+    else { input.classList.add('bad'); msgEl.classList.add('bad'); msgEl.textContent = result; }
+  }
+
+  var emailTouched = false, phoneTouched = false;
+  function paintEmail() { paint(email, emsg, checkEmail(email.value), 'Looks good.'); }
+  function paintPhone() { paint(phone, pmsg, checkPhone(phone.value), 'Looks good.'); }
+  email.addEventListener('blur', function () { emailTouched = true; paintEmail(); });
+  phone.addEventListener('blur', function () { phoneTouched = true; paintPhone(); });
+  email.addEventListener('input', function () { if (emailTouched) paintEmail(); });
+  phone.addEventListener('input', function () { if (phoneTouched) paintPhone(); });
+  cc.addEventListener('change', function () { if (phoneTouched) paintPhone(); });
+
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
-    var contact = document.getElementById('contact').value.trim();
-    err.hidden = true; btn.disabled = true; btn.textContent = 'One moment\u2026';
+    err.hidden = true;
+    var ev = checkEmail(email.value), pv = checkPhone(phone.value), contact = null;
+
+    if (ev === true) contact = email.value.trim();
+    else if (pv === true) {
+      var dial = cc.value.split('|')[0];
+      contact = '+' + dial + national(phone.value, dial);
+    }
+
+    if (!contact) {
+      emailTouched = phoneTouched = true; paintEmail(); paintPhone();
+      err.textContent = (ev === null && pv === null)
+        ? 'Pop in an email address or a phone number and the pack is yours.'
+        : 'One of those two needs fixing before we can send it.';
+      err.hidden = false;
+      (ev !== null ? email : phone).focus();
+      return;
+    }
+
+    btn.disabled = true; btn.textContent = 'One moment\u2026';
     try {
       var res = await fetch('https://go.modusentertainment.com/subscribe', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
+        method: 'POST', headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ contact: contact })
       });
       var data = await res.json();
-      if (!res.ok || !data.ok) throw new Error(data.error || 'Something went wrong.');
+      if (!res.ok || !data.ok) throw new Error(data.error || 'Something went wrong on our end.');
       document.getElementById('dl').href = data.file;
       form.hidden = true; done.hidden = false;
       document.getElementById('dl').focus();
