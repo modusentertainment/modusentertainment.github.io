@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Free Kakuro Sampler — 12 Puzzles with Original Artwork</title>
+<title>12 Free Kakuro Puzzles — With Pictures to Colour</title>
 <meta name="description" content="Twelve beginner Kakuro puzzles, each on its own hand-drawn illustration you can colour in. Free PDF in exchange for an email or a phone number.">
 
 <!-- Share cards. Without these the link renders as a bare grey box on Facebook,
@@ -18,14 +18,14 @@
 <meta property="og:title" content="12 free Kakuro puzzles — each on a picture you can colour">
 <meta property="og:description" content="A free sampler from the Kakuro 2-in-1 Beginner Volume. Large print, pure logic, no guessing — and an original hand-drawn illustration behind every grid. Leave an email or a phone number and it is yours on the spot.">
 <meta property="og:url" content="https://go.modusentertainment.com/pack">
-<meta property="og:image" content="https://go.modusentertainment.com/pack/preview.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="1553">
-<meta property="og:image:alt" content="The Kakuro 2-in-1 Puzzles + Coloring Book cover: 120 beginner puzzles, illustrated.">
+<meta property="og:image" content="https://go.modusentertainment.com/pack/promo-fall.jpg">
+<meta property="og:image:width" content="1122">
+<meta property="og:image:height" content="1402">
+<meta property="og:image:alt" content="A Kakuro gift box open on an autumn table, filled with leaves, pumpkins and pine cones.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="12 free Kakuro puzzles — each on a picture you can colour">
 <meta name="twitter:description" content="A free sampler from the Kakuro 2-in-1 Beginner Volume. An email or a phone number and it is yours.">
-<meta name="twitter:image" content="https://go.modusentertainment.com/pack/preview.jpg">
+<meta name="twitter:image" content="https://go.modusentertainment.com/pack/promo-fall.jpg">
 
 <!-- The download page for the free sampler. Unlike the /go/ pages this is a
      real destination, not a redirect, so it is indexable and is allowed to be.
@@ -35,170 +35,278 @@
      consent to, nothing to slow the download, and no personal data collected. -->
 
 <style>
-body{max-width:40rem;margin:0 auto;padding:3rem 1.25rem 5rem;font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;color:#1a1a1a;background:#fff}
-h1{font-size:1.7rem;line-height:1.25;margin:0 0 .5rem}
-.sub{color:#555;margin:0 0 2rem}
-ul{padding-left:1.1rem}li{margin:.35rem 0}
-.gate{margin:2rem 0 .5rem}
-.deal{background:#f4f6f9;border-left:3px solid #0057b8;padding:.9rem 1rem;border-radius:.3rem;font-size:.95rem;margin:0 0 1rem}
-.field{margin:0 0 .25rem}
-.field label{display:block;font-size:.85rem;font-weight:600;color:#444;margin:0 0 .35rem}
-.gate input,.gate select{width:100%;box-sizing:border-box;font:inherit;padding:.85rem 1rem;border:1px solid #c6ccd4;border-radius:.5rem;background:#fff;color:#1a1a1a}
-.phone-row{display:flex;gap:.5rem}
-.phone-row select{flex:0 0 11.5rem;padding-right:.5rem}
-.phone-row input{flex:1 1 auto;min-width:0}
-.gate input.ok{border-color:#1a7f37;background:#f6fbf7}
-.gate input.bad{border-color:#b3261e;background:#fdf7f7}
-.hint{font-size:.82rem;margin:.35rem 0 0;min-height:1.1em;color:#666}
-.hint.ok{color:#1a7f37}
-.hint.bad{color:#b3261e}
-.or{display:flex;align-items:center;text-align:center;color:#888;font-size:.85rem;margin:.9rem 0}
-.or::before,.or::after{content:"";flex:1;border-top:1px solid #dfe3e8}
-.or span{padding:0 .75rem;text-transform:uppercase;letter-spacing:.08em}
-.gate input:focus{outline:2px solid #0057b8;outline-offset:1px;border-color:#0057b8}
-.gate button{width:100%;margin-top:.6rem;font:inherit;font-weight:600;cursor:pointer;border:0;background:#0057b8;color:#fff;padding:1rem 1.25rem;border-radius:.5rem}
-.gate button:hover{background:#00438f}
-.gate button[disabled]{opacity:.6;cursor:default}
-.err{color:#b3261e;font-size:.9rem;margin:.6rem 0 0}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.dl{display:block;text-align:center;background:#0057b8;color:#fff;text-decoration:none;font-weight:600;padding:1rem 1.25rem;border-radius:.5rem;margin:2rem 0 .5rem}
-.dl:hover{background:#00438f}
-.meta{text-align:center;color:#666;font-size:.9rem;margin:0 0 2.5rem}
-.more{border-top:1px solid #e3e3e3;padding-top:1.75rem;margin-top:2.5rem}
-a{color:#0057b8}
-footer{margin-top:3rem;color:#777;font-size:.85rem}
-@media (prefers-color-scheme:dark){
- .deal{background:#1e2430;border-left-color:#1b6fd4}
- .gate input,.gate select{background:#1b1b1b;border-color:#3a3a3a;color:#e8e8e8}
- .field label{color:#bbb}.hint{color:#999}
- .gate input.ok{border-color:#3fb950;background:#121a14}
- .gate input.bad{border-color:#f2837b;background:#1e1414}
- .hint.ok{color:#3fb950}.hint.bad{color:#f2837b}
- .or{color:#888}.or::before,.or::after{border-top-color:#333}
- .err{color:#f2837b}
- body{background:#151515;color:#e8e8e8}.sub{color:#aaa}.meta{color:#999}
- a{color:#79b8ff}.dl{background:#1b6fd4;color:#fff}.dl:hover{background:#2a82ea}
- .more{border-top-color:#333}footer{color:#888}}
+/* IBM Plex Mono. Typewriter lineage, drawn in 2017 rather than 1950 -- it has
+   the ruled-form feeling the artwork asks for without tipping into pastiche,
+   and it holds up at 13px where most monos turn to mush. Self-hosted: no
+   Google Fonts call, nothing to consent to, nothing that can go down. */
+@font-face{font-family:Plex;src:url(/fonts/plex-mono-400.woff2) format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:Plex;src:url(/fonts/plex-mono-500.woff2) format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:Plex;src:url(/fonts/plex-mono-600.woff2) format('woff2');font-weight:600;font-display:swap}
+
+/* Palette sampled from the artwork itself. */
+:root{
+  --card:#f5ebe0;      /* the note card in the box */
+  --ink:#2e2118;       /* warm near-black, not pure black */
+  --ink-soft:#7a6553;
+  --rule:#cbb69f;
+  --accent:#9c3311;    /* the ribbon */
+  --accent-dark:#7d2a0e;
+  --ok:#4a6b3a;
+  --bad:#a33a22;
+  /* The note card, measured off the artwork and then checked by drawing the
+     rectangle back onto the picture and looking at it. The first measurement
+     was 8% too wide and ran into the frog's head in the bottom-left corner.
+     The card itself runs 23.89%-81.64%, centre 52.76%; this zone is inset from
+     that to clear the frog and is centred on the same axis. The wide band of
+     cream that appears to the left in a render is the frog, not a misalignment
+     -- measured, the form's centre sits within 6px of the card's. */
+  --z-left:28.97%; --z-top:43.79%; --z-w:49.73%; --z-h:29.17%;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:#1b1512;
+  font-family:Plex,ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--ink)}
+.stage{max-width:620px;margin:0 auto;padding:1.5rem 1rem 3rem}
+
+/* Artwork and form are one unit: the form is positioned as a PERCENTAGE of the
+   picture, so the box and the fields stay locked together at every width. */
+.card{position:relative;width:100%;aspect-ratio:1122/1402;border-radius:.4rem;overflow:hidden;
+  box-shadow:0 18px 50px rgba(0,0,0,.55)}
+.card img{width:100%;height:100%;display:block;object-fit:cover}
+
+.zone{position:absolute;left:var(--z-left);top:var(--z-top);width:var(--z-w);height:var(--z-h);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:0 4.2%;container-type:inline-size}
+
+/* Everything inside the note card scales with the card, so the layout holds
+   from a phone to a desktop without a single breakpoint. cqw = 1% of the
+   zone's width. */
+.zone .lead{margin:0 0 4.5cqw;font-size:4.3cqw;line-height:1.35;font-weight:500;
+  color:var(--ink);letter-spacing:.01em}
+.zone input,.zone select{width:100%;font:inherit;font-size:4.4cqw;padding:2.6cqw 3cqw;
+  color:var(--ink);background:rgba(255,255,255,.62);
+  border:1px solid var(--rule);border-radius:.25rem;outline:0}
+.zone input::placeholder{color:#a8927c}
+.zone input:focus,.zone select:focus{border-color:var(--accent);
+  box-shadow:0 0 0 2px rgba(156,51,17,.18);background:rgba(255,255,255,.85)}
+.zone input.ok{border-color:var(--ok)}
+.zone input.bad{border-color:var(--bad)}
+
+.or{display:flex;align-items:center;gap:2.5cqw;margin:2.6cqw 0;
+  font-size:3.2cqw;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft)}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--rule)}
+
+.row{display:flex;gap:2.2cqw}
+.row select{flex:0 0 30%;padding-left:2cqw;padding-right:1cqw;text-align:center}
+.row input{flex:1 1 auto;min-width:0}
+
+button{width:100%;margin-top:3.4cqw;font:inherit;font-size:4.4cqw;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;cursor:pointer;color:#fff;
+  background:var(--accent);border:0;border-radius:.25rem;padding:3.1cqw 3cqw;
+  box-shadow:0 2px 0 var(--accent-dark)}
+button:hover{background:var(--accent-dark)}
+
+.msg{max-width:620px;margin:.9rem auto 0;text-align:center;font-size:.82rem;
+  line-height:1.4;min-height:1.4em;color:#c9b8a6;letter-spacing:.01em}
+.msg.ok{color:#8fbf76} .msg.bad{color:#f0917a}
+
+/* Below the note card, on the page itself. */
+.below{max-width:620px;margin:1.6rem auto 0;color:#e7ddd2;font-size:.92rem;line-height:1.6}
+.below h1{font-size:1.15rem;font-weight:600;letter-spacing:.01em;margin:0 0 .6rem;color:#fff}
+.below ul{margin:.5rem 0 0;padding-left:1.1rem}
+.below li{margin:.3rem 0}
+.below a{color:#e8a25f}
+.done{max-width:620px;margin:1rem auto 0;text-align:center}
+.dl{display:inline-block;font-size:.95rem;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;text-decoration:none;color:#fff;background:var(--accent);
+  border-radius:.25rem;padding:.85rem 1.8rem;box-shadow:0 2px 0 var(--accent-dark)}
+.dl:hover{background:var(--accent-dark)}
 </style>
 </head>
 <body>
+<div class="stage">
 
-<h1>Twelve free Kakuro puzzles &mdash; each one sitting on a picture you can colour</h1>
-<p class="sub">A sampler from the Kakuro 2-in-1 Beginner Volume, free to print at home.</p>
-
-<ul>
-  <li><strong>12 beginner puzzles</strong>, large print, every one solvable by pure logic &mdash; no guessing, one clean solution each.</li>
-  <li><strong>An original hand-drawn illustration behind every grid.</strong> Solve it first, then colour the scene.</li>
-  <li><strong>A one-page "How to play Kakuro"</strong> &mdash; if you can do Sudoku you will pick this up in about two minutes.</li>
-  <li><strong>Full solutions</strong> at the back.</li>
-</ul>
-
-<form id="gate" class="gate" novalidate>
-  <p class="deal">We have many more gifts and offers in store this fall season, and we will send them your way.</p>
-
-  <div class="field">
-    <label for="email">Email address</label>
-    <input id="email" name="email" type="email" inputmode="email" autocomplete="email"
-           placeholder="you@example.com" aria-describedby="email-msg">
-    <p class="hint" id="email-msg" role="status"></p>
-  </div>
-
-  <div class="or"><span>or</span></div>
-
-  <div class="field">
-    <label for="phone">Phone number</label>
-    <div class="phone-row">
-      <select id="cc" aria-label="Country code"></select>
-      <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel-national"
-             placeholder="555 012 3456" aria-describedby="phone-msg">
+  <div class="card">
+    <img src="/pack/promo-fall.jpg" alt="A Kakuro gift box open on an autumn table, filled with leaves, pumpkins and pine cones.">
+    <div class="zone">
+      <p class="lead">Twelve free puzzles. Where shall we send them?</p>
+      <input id="email" type="email" inputmode="email" autocomplete="email" placeholder="your@email.com" aria-label="Email address">
+      <div class="or"><span>or</span></div>
+      <div class="row">
+        <select id="cc" aria-label="Country code"></select>
+        <input id="phone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="phone number" aria-label="Phone number">
+      </div>
+      <button id="go" type="button">Send me the pack</button>
     </div>
-    <p class="hint" id="phone-msg" role="status"></p>
   </div>
 
-  <button type="submit" id="go">Send me the free pack</button>
-  <p class="err" id="err" role="alert" hidden></p>
-  <p class="meta">17 pages &middot; letter size &middot; prints at home &middot; 4.5&nbsp;MB PDF</p>
-</form>
+  <p class="msg" id="msg">More gifts and offers in store this fall &mdash; we&rsquo;ll send them your way.</p>
+  <p class="done" id="done" hidden>
+    <a class="dl" id="dl" href="https://go.modusentertainment.com/pack/kakuro-free-pack.pdf" download>Download your pack &darr;</a>
+  </p>
 
-<div id="done" class="done" hidden>
-  <a class="dl" id="dl" href="https://go.modusentertainment.com/pack/kakuro-free-pack.pdf" download>Download your pack now (PDF)</a>
-  <p class="meta">Thank you &mdash; that is the deal honoured. The file is yours.</p>
+  <div class="below">
+    <h1>What&rsquo;s in the pack</h1>
+    <ul>
+      <li>12 beginner grids, large print, one clean solution each</li>
+      <li>An original hand-drawn animal behind every one</li>
+      <li>A one-page &ldquo;How to play Kakuro&rdquo; &mdash; two minutes if you do Sudoku</li>
+      <li>Full solutions at the back</li>
+    </ul>
+    <p>17 pages &middot; prints at home &middot; <a href="https://go.modusentertainment.com/kakuro">see the full 120-puzzle book &rarr;</a></p>
+  </div>
+
 </div>
-
-<div class="more">
-  <p><strong>What is Kakuro?</strong> It is the sudoku variant also known as Cross Sums. Every run of white squares has to add up to the number at its head, and no digit repeats inside a run. There is no arithmetic drilling in it &mdash; it is pure logic, and it never needs a guess.</p>
-  <p>If you get on with these, the full book has <strong>120 of them</strong>, each with its own illustration, running from cosy farmland through tropical islands to snowy mountain forests.</p>
-  <p><a href="https://go.modusentertainment.com/kakuro">See the full Kakuro 2-in-1 Beginner Volume &rarr;</a></p>
-</div>
-
-<footer>
-  <p>Modus Entertainment &middot; <a href="https://modusentertainment.github.io/privacy/">Privacy</a></p>
-</footer>
-
 <script>
-/* The gate. Two fields, either one is enough.
+/* Two fields, either one is enough. Validation runs here for the reader -- a
+   red field the moment a typo is obvious beats a rejection after the click --
+   and again in the Worker, which is the one that actually decides. The client
+   checks are a courtesy, never the gate.
 
-   Validation runs here for the reader's benefit -- a red line the moment a
-   typo is obvious beats a rejection after they press the button -- and again
-   in the Worker, which is the one that actually decides. Client checks are a
-   courtesy; never the gate.
-
-   Phone lengths below are NATIONAL digits, excluding the country code, and are
-   only listed where a country has a genuinely fixed or narrow range. Anything
-   unlisted falls back to a wide 6-14, because refusing somebody's real number
-   costs a real lead and a too-clever validator is how that happens. */
+   Phone lengths are NATIONAL digits, excluding the dial code, and are only
+   given where a country has a genuinely fixed or narrow range. Anything else
+   falls back to a wide 6-14: refusing somebody's real number costs a real lead,
+   and a too-clever validator is exactly how that happens. */
 (function () {
-  var COUNTRIES = [
-    ['US', 'United States', '1', 10], ['CA', 'Canada', '1', 10],
-    ['GB', 'United Kingdom', '44', [9, 10]], ['IE', 'Ireland', '353', [7, 9]],
-    ['AU', 'Australia', '61', 9], ['NZ', 'New Zealand', '64', [8, 9]],
-    ['DE', 'Germany', '49', [10, 11]], ['FR', 'France', '33', 9],
-    ['IT', 'Italy', '39', [9, 10]], ['ES', 'Spain', '34', 9],
-    ['NL', 'Netherlands', '31', 9], ['BE', 'Belgium', '32', [8, 9]],
-    ['CH', 'Switzerland', '41', 9], ['AT', 'Austria', '43', [10, 11]],
-    ['SE', 'Sweden', '46', [7, 9]], ['NO', 'Norway', '47', 8],
-    ['DK', 'Denmark', '45', 8], ['FI', 'Finland', '358', [9, 10]],
-    ['PT', 'Portugal', '351', 9], ['PL', 'Poland', '48', 9],
-    ['CZ', 'Czechia', '420', 9], ['GR', 'Greece', '30', 10],
-    ['JP', 'Japan', '81', 10], ['KR', 'South Korea', '82', [9, 10]],
-    ['IN', 'India', '91', 10], ['SG', 'Singapore', '65', 8],
-    ['MY', 'Malaysia', '60', [9, 10]], ['PH', 'Philippines', '63', 10],
-    ['ZA', 'South Africa', '27', 9], ['AE', 'UAE', '971', 9],
-    ['IL', 'Israel', '972', 9], ['TR', 'Turkey', '90', 10],
-    ['BR', 'Brazil', '55', [10, 11]], ['MX', 'Mexico', '52', 10],
-    ['AR', 'Argentina', '54', 10], ['CL', 'Chile', '56', 9],
-    ['CO', 'Colombia', '57', 10]
+  var DATA = [
+  ["Amazon marketplaces"],
+  ["AU","Australia","61","9"],
+  ["BE","Belgium","32","8-9"],
+  ["BR","Brazil","55","10-11"],
+  ["CA","Canada","1","10"],
+  ["EG","Egypt","20","10"],
+  ["FR","France","33","9"],
+  ["DE","Germany","49","10-11"],
+  ["IN","India","91","10"],
+  ["IE","Ireland","353","7-9"],
+  ["IT","Italy","39","9-10"],
+  ["JP","Japan","81","10"],
+  ["MX","Mexico","52","10"],
+  ["NL","Netherlands","31","9"],
+  ["PL","Poland","48","9"],
+  ["SA","Saudi Arabia","966","9"],
+  ["SG","Singapore","65","8"],
+  ["ZA","South Africa","27","9"],
+  ["ES","Spain","34","9"],
+  ["SE","Sweden","46","7-9"],
+  ["TR","Turkey","90","10"],
+  ["AE","UAE","971","9"],
+  ["GB","United Kingdom","44","9-10"],
+  ["US","United States","1","10"],
+  ["Asia & Pacific"],
+  ["BD","Bangladesh","880","10"],
+  ["BN","Brunei","673","7"],
+  ["KH","Cambodia","855","8-9"],
+  ["CN","China","86","11"],
+  ["FJ","Fiji","679","7"],
+  ["HK","Hong Kong","852","8"],
+  ["ID","Indonesia","62","9-12"],
+  ["LA","Laos","856","9-10"],
+  ["MO","Macau","853","8"],
+  ["MY","Malaysia","60","9-10"],
+  ["MV","Maldives","960","7"],
+  ["MN","Mongolia","976","8"],
+  ["MM","Myanmar","95","8-10"],
+  ["NP","Nepal","977","10"],
+  ["NZ","New Zealand","64","8-9"],
+  ["PK","Pakistan","92","10"],
+  ["PH","Philippines","63","10"],
+  ["KR","South Korea","82","9-10"],
+  ["LK","Sri Lanka","94","9"],
+  ["TW","Taiwan","886","9"],
+  ["TH","Thailand","66","9"],
+  ["VN","Vietnam","84","9-10"],
+  ["Middle East"],
+  ["BH","Bahrain","973","8"],
+  ["IQ","Iraq","964","10"],
+  ["IL","Israel","972","9"],
+  ["JO","Jordan","962","9"],
+  ["KW","Kuwait","965","8"],
+  ["LB","Lebanon","961","7-8"],
+  ["OM","Oman","968","8"],
+  ["QA","Qatar","974","8"],
+  ["Europe"],
+  ["AT","Austria","43","10-11"],
+  ["BG","Bulgaria","359","8-9"],
+  ["HR","Croatia","385","8-9"],
+  ["CY","Cyprus","357","8"],
+  ["CZ","Czechia","420","9"],
+  ["DK","Denmark","45","8"],
+  ["EE","Estonia","372","7-8"],
+  ["FI","Finland","358","9-10"],
+  ["GR","Greece","30","10"],
+  ["HU","Hungary","36","9"],
+  ["IS","Iceland","354","7"],
+  ["LV","Latvia","371","8"],
+  ["LT","Lithuania","370","8"],
+  ["LU","Luxembourg","352","9"],
+  ["MT","Malta","356","8"],
+  ["NO","Norway","47","8"],
+  ["PT","Portugal","351","9"],
+  ["RO","Romania","40","9"],
+  ["RS","Serbia","381","8-9"],
+  ["SK","Slovakia","421","9"],
+  ["SI","Slovenia","386","8"],
+  ["CH","Switzerland","41","9"],
+  ["UA","Ukraine","380","9"],
+  ["Americas"],
+  ["AR","Argentina","54","10"],
+  ["BO","Bolivia","591","8"],
+  ["CL","Chile","56","9"],
+  ["CO","Colombia","57","10"],
+  ["CR","Costa Rica","506","8"],
+  ["DO","Dominican Rep.","1","10"],
+  ["EC","Ecuador","593","9"],
+  ["GT","Guatemala","502","8"],
+  ["PA","Panama","507","8"],
+  ["PY","Paraguay","595","9"],
+  ["PE","Peru","51","9"],
+  ["PR","Puerto Rico","1","10"],
+  ["UY","Uruguay","598","8"],
+  ["Africa"],
+  ["DZ","Algeria","213","9"],
+  ["ET","Ethiopia","251","9"],
+  ["GH","Ghana","233","9"],
+  ["KE","Kenya","254","9"],
+  ["MA","Morocco","212","9"],
+  ["NG","Nigeria","234","10"],
+  ["TZ","Tanzania","255","9"],
+  ["TN","Tunisia","216","8"],
   ];
 
   var cc = document.getElementById('cc'), email = document.getElementById('email'),
-      phone = document.getElementById('phone'), emsg = document.getElementById('email-msg'),
-      pmsg = document.getElementById('phone-msg'), err = document.getElementById('err'),
-      btn = document.getElementById('go'), form = document.getElementById('gate'),
-      done = document.getElementById('done');
+      phone = document.getElementById('phone'), msg = document.getElementById('msg'),
+      btn = document.getElementById('go'), done = document.getElementById('done'),
+      zone = document.querySelector('.zone'),
+      baseMsg = msg.textContent;
 
-  COUNTRIES.forEach(function (c) {
+  var group = null;
+  DATA.forEach(function (c) {
+    if (c.length === 1) { group = document.createElement('optgroup'); group.label = c[0]; cc.appendChild(group); return; }
     var o = document.createElement('option');
-    o.value = c[2] + '|' + (Array.isArray(c[3]) ? c[3].join('-') : c[3]);
-    o.textContent = c[1] + ' (+' + c[2] + ')';
+    o.value = c[2] + '|' + c[3];
+    o.textContent = c[0] + ' +' + c[2];
+    o.title = c[1];
     if (c[0] === 'US') o.selected = true;
-    cc.appendChild(o);
+    (group || cc).appendChild(o);
   });
 
-  /* Deliberately practical, not RFC-complete. It catches every mistake a real
-     person actually makes -- missing @, missing dot, a stray space, a trailing
-     dot -- without rejecting the unusual-but-valid addresses a stricter pattern
+  function say(text, kind) {
+    msg.textContent = text;
+    msg.classList.remove('ok', 'bad');
+    if (kind) msg.classList.add(kind);
+  }
+
+  /* Practical, not RFC-complete: it catches every mistake a person actually
+     makes without rejecting the unusual-but-valid addresses a stricter pattern
      throws away. */
   function checkEmail(v) {
-    v = v.trim();
+    v = (v || '').trim();
     if (!v) return null;
     if (!/^[^\s@]+@[^\s@]+$/.test(v)) return 'That needs an @ with something either side of it.';
     var parts = v.split('@'), local = parts[0], domain = parts[1];
     if (!/^[A-Za-z0-9!#$%&'*+/=?^_`{|}~.-]+$/.test(local)) return 'There is a character in there an email cannot have.';
     if (/^\.|\.$|\.\./.test(local) || /^\.|\.$|\.\./.test(domain)) return 'There is a full stop in the wrong place.';
     if (domain.indexOf('.') === -1) return 'The part after the @ needs a dot, like gmail.com';
-    /* Each dot-separated label must start and end with a letter or digit --
-       hyphens are only legal inside one. "a@-.com" slipped through a looser
-       check on the first test run. */
     if (!/^[A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])?)*$/.test(domain))
       return 'That domain name is not a valid one.';
     if (!/\.[A-Za-z]{2,}$/.test(domain)) return 'That does not end in a real domain ending.';
@@ -207,9 +315,9 @@ footer{margin-top:3rem;color:#777;font-size:.85rem}
 
   /* National digits with any trunk prefix removed. Most of the world writes a
      mobile number with a leading 0 that is dropped when dialling in from
-     abroad -- "07700 900123" in the UK is the same number as +44 7700 900123 --
-     and counting that 0 rejected a real number on this validator's first test
-     run. The NANP equivalent is a leading 1. */
+     abroad -- "07700 900123" is the same number as +44 7700 900123 -- and
+     counting that 0 rejected a real number on this validator's first test run.
+     The NANP equivalent is a leading 1. */
   function national(v, dial) {
     var d = (v || '').replace(/\D/g, '');
     if (!d) return '';
@@ -218,61 +326,50 @@ footer{margin-top:3rem;color:#777;font-size:.85rem}
   }
 
   function checkPhone(v) {
-    var dial = cc.value.split('|')[0];
     var raw = (v || '').replace(/\D/g, '');
     if (!raw) return null;
-    var spec = cc.value.split('|')[1].split('-').map(Number);
+    var bits = cc.value.split('|'), dial = bits[0], spec = bits[1].split('-').map(Number);
     var min = spec[0] || 6, max = (spec.length > 1 ? spec[1] : spec[0]) || 14;
-    /* Accept whichever reading fits: a few countries keep the leading 0 as part
-       of the number, so both the raw and the trunk-stripped form are allowed
-       rather than picking one and rejecting the other. */
     var forms = [raw, national(v, dial)].filter(Boolean);
-    var fits = forms.some(function (f) { return f.length >= min && f.length <= max; });
-    if (fits) return true;
+    if (forms.some(function (f) { return f.length >= min && f.length <= max; })) return true;
     var want = (min === max ? String(min) : min + '-' + max) + ' digits';
     var longest = Math.max.apply(null, forms.map(function (f) { return f.length; }));
-    return longest < min
-      ? 'That looks short for this country — expecting ' + want + '.'
-      : 'That looks long for this country — expecting ' + want + '.';
+    return longest < min ? 'That looks short for this country — expecting ' + want + '.'
+                         : 'That looks long for this country — expecting ' + want + '.';
   }
 
-  function paint(input, msgEl, result, okText) {
-    input.classList.remove('ok', 'bad'); msgEl.classList.remove('ok', 'bad');
-    if (result === null) { msgEl.textContent = ''; return; }
-    if (result === true) { input.classList.add('ok'); msgEl.classList.add('ok'); msgEl.textContent = okText; }
-    else { input.classList.add('bad'); msgEl.classList.add('bad'); msgEl.textContent = result; }
+  function mark(el, res) {
+    el.classList.remove('ok', 'bad');
+    if (res === true) el.classList.add('ok');
+    else if (res) el.classList.add('bad');
   }
 
-  var emailTouched = false, phoneTouched = false;
-  function paintEmail() { paint(email, emsg, checkEmail(email.value), 'Looks good.'); }
-  function paintPhone() { paint(phone, pmsg, checkPhone(phone.value), 'Looks good.'); }
-  email.addEventListener('blur', function () { emailTouched = true; paintEmail(); });
-  phone.addEventListener('blur', function () { phoneTouched = true; paintPhone(); });
-  email.addEventListener('input', function () { if (emailTouched) paintEmail(); });
-  phone.addEventListener('input', function () { if (phoneTouched) paintPhone(); });
-  cc.addEventListener('change', function () { if (phoneTouched) paintPhone(); });
+  var touchedE = false, touchedP = false;
+  function paint() {
+    var e = touchedE ? checkEmail(email.value) : null,
+        p = touchedP ? checkPhone(phone.value) : null;
+    mark(email, e); mark(phone, p);
+    if (e && e !== true) say(e, 'bad');
+    else if (p && p !== true) say(p, 'bad');
+    else if (e === true || p === true) say('Looks good — hit the button.', 'ok');
+    else say(baseMsg);
+  }
+  email.addEventListener('blur', function () { touchedE = true; paint(); });
+  phone.addEventListener('blur', function () { touchedP = true; paint(); });
+  email.addEventListener('input', function () { if (touchedE) paint(); });
+  phone.addEventListener('input', function () { if (touchedP) paint(); });
+  cc.addEventListener('change', function () { if (touchedP) paint(); });
 
-  form.addEventListener('submit', async function (e) {
-    e.preventDefault();
-    err.hidden = true;
-    var ev = checkEmail(email.value), pv = checkPhone(phone.value), contact = null;
-
-    if (ev === true) contact = email.value.trim();
-    else if (pv === true) {
-      var dial = cc.value.split('|')[0];
-      contact = '+' + dial + national(phone.value, dial);
-    }
-
+  btn.addEventListener('click', async function () {
+    var e = checkEmail(email.value), p = checkPhone(phone.value), contact = null;
+    if (e === true) contact = email.value.trim();
+    else if (p === true) contact = '+' + cc.value.split('|')[0] + national(phone.value, cc.value.split('|')[0]);
     if (!contact) {
-      emailTouched = phoneTouched = true; paintEmail(); paintPhone();
-      err.textContent = (ev === null && pv === null)
-        ? 'Pop in an email address or a phone number and the pack is yours.'
-        : 'One of those two needs fixing before we can send it.';
-      err.hidden = false;
-      (ev !== null ? email : phone).focus();
+      touchedE = touchedP = true; paint();
+      if (e === null && p === null) say('Pop in an email or a phone number and it is yours.', 'bad');
+      (e !== null ? email : phone).focus();
       return;
     }
-
     btn.disabled = true; btn.textContent = 'One moment\u2026';
     try {
       var res = await fetch('https://go.modusentertainment.com/subscribe', {
@@ -282,15 +379,15 @@ footer{margin-top:3rem;color:#777;font-size:.85rem}
       var data = await res.json();
       if (!res.ok || !data.ok) throw new Error(data.error || 'Something went wrong on our end.');
       document.getElementById('dl').href = data.file;
-      form.hidden = true; done.hidden = false;
+      zone.hidden = true; done.hidden = false;
+      say('Thank you — that is the deal honoured. The pack is yours.', 'ok');
       document.getElementById('dl').focus();
     } catch (ex) {
-      err.textContent = ex.message; err.hidden = false;
-      btn.disabled = false; btn.textContent = 'Send me the free pack';
+      say(ex.message, 'bad');
+      btn.disabled = false; btn.textContent = 'Send me the pack';
     }
   });
 })();
 </script>
-
 </body>
 </html>
