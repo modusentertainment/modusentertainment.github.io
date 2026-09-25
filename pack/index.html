@@ -73,6 +73,9 @@ html,body{margin:0;background:#1b1512;
   box-shadow:0 18px 50px rgba(0,0,0,.55)}
 .card img{width:100%;height:100%;display:block;object-fit:cover}
 
+/* display:flex below beats the browser default [hidden]{display:none}, so the
+   done state painted straight on top of the live form. Specificity, not logic. */
+.zone[hidden]{display:none}
 .zone{position:absolute;left:var(--z-left);top:var(--z-top);width:var(--z-w);height:var(--z-h);
   display:flex;flex-direction:column;justify-content:center;
   padding:0 4.2%;container-type:inline-size}
